@@ -77,12 +77,9 @@ WSGI_APPLICATION = 'DBProject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'cahill',
-        'USER': 'cahill',
-        'PASSWORD': 'nevergoingtogiveyouup',
-        'HOST': 'classdb.it.mtu.edu',
-        'PORT': '',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'USER': ''
     }
 }
 
