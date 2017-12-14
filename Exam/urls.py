@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^studentSignIn/', views.studentSignIn, name='studentSignIn'),
     url(r'^TeacherLogin/$', auth_views.login, name='login'),
     url(r'^TeacherLogout/$',auth_views.logout, {'next_page': '/'}, name='logout'),
+    url(r'^TeacherSignup/$', views.signup, name='signup'),
 ]
