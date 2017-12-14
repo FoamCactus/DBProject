@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="cd5bce81-afe7-471e-a417-da19a5860489" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -281,7 +280,14 @@
       <option name="project" value="LOCAL" />
       <updated>1513217977737</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="added most of the auth">
+      <created>1513222308244</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1513222308244</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -370,7 +376,8 @@
     <MESSAGE value="linked stylesheet" />
     <MESSAGE value="added an icon, the most important thing" />
     <MESSAGE value="added bootstrap" />
-    <option name="LAST_COMMIT_MESSAGE" value="added bootstrap" />
+    <MESSAGE value="added most of the auth" />
+    <option name="LAST_COMMIT_MESSAGE" value="added most of the auth" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -390,7 +397,7 @@
         <state relative-caret-position="391">
           <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
           <folding>
-            <element signature="e#0#28#0" expanded="false" />
+            <element signature="e#0#28#0" expanded="true" />
           </folding>
         </state>
       </provider>
