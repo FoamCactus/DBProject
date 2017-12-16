@@ -5,6 +5,10 @@ p {
     color: mediumaquamarine;
 }
 
+a {
+    color: #006159;
+}
+
 body {
     background-color: #ffffff;
 }
@@ -20,6 +24,16 @@ body {
 
 .navbar-inverse .navbar-nav>li>a, .navbar>.container .navbar-brand {
     color: white;
+}
+
+.abcRioButton {
+    margin:0 auto;
+}
+
+.bottom {
+    position: absolute;
+    bottom: 0;
+    padding: 5px;
 }
 
 .loginBox {

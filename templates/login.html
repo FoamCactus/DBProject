@@ -1,20 +1,37 @@
 {% extends "base.html" %}
 {%  block content %}
 {% csrf_token %}
-   <div class='loginBox'>
+<div class="row col-md-12">
+       <div class='loginBox'>
        <h1>
            Login
        </h1>
-       <div class="row col-md-12 center">
-                  <div id="login" class="g-signin2" data-onsuccess="onSignIn"></div>
+       <p>
+           Login / Logout using the forms below.
+       </p>
+       <div id="login" class="row col-md-12 center">
+           <div class='g-signin2' data-onsuccess='onSignIn'></div>
+       </div>
+       
+       <br/>
+       <br/>
+       <div class="bottom col-md-12">
+       <p>
+           <b>Teacher Access:</b>
+       </p>
+       <a href="/TeacherSignup">Teacher Signup</a>
+       <a href="/TeacherLogin">Teacher Login</a>
        </div>
 
+
+    </div>
 </div>
 <script type="text/javascript">
     $(document).ready(function() {
         console.log(Cookies.get("account"));
-        if(Cookies.get("account") !== null || Cookies.get("account") != ""){ 
-            $("#login").html("<button class='btn btn-primary' onclick='signOut()'>Sign Out</button>")
+        if(Cookies.get("account") != null){ 
+            $("#login").html("<button class='btn btn-primary' onclick='signOut()'>Sign Out</button>");
+        } else {
         }
     });
     
@@ -53,12 +70,23 @@ function onSignIn(googleUser) {
        url: "/studentSignIn/",
        data: JSON.stringify(user),
        success: function(data) {
-           		Cookies.set('account', profile.getId());
+           		if(Cookies.get("account") == null) {
+                  Cookies.set('account', profile.getId());
+				  location.reload();
+                }
     		},
         error: function(error) {
         	console.log(error);
         }
     });
 }
+    
+     function signOut() {
+    Cookies.remove('account');
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      location.reload();
+    });
+  }
 </script>
 {% endblock %}
