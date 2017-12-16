@@ -33,4 +33,4 @@ class Student(models.Model):
 class Results(models.Model):
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
     points =models.FloatField(default=0)
-    student = models.ForeignKeyl(Student, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
