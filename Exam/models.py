@@ -9,6 +9,12 @@ class Exam(models.Model):
     time_of_creation = models.DateTimeField(default=datetime.datetime.now())
 
 
+class Answers(models.Model):
+    examName = models.ForeignKey(Exam, on_delete=models.CASCADE)
+    question = models.TextField(max_length=280, primary_key=True)
+    correct = models.BooleanField(default=False)
+
+
 class Question(models.Model):
     examName = models.ForeignKey(Exam, on_delete=models.CASCADE)
     text = models.CharField(max_length=280)
@@ -17,11 +23,7 @@ class Question(models.Model):
     answers = models.ForeignKey(Answers, on_delete=models.CASCADE)
 
 
-class Answers(models.Model):
-    examName = models.ForeignKey(Exam, on_delete=models.CASCADE)
-    questionName = models.ForeignKey(Question,  on_delete=models.CASCADE, default=1)
-    question = models.TextField(max_length=280, primary_key=True)
-    correct = models.BooleanField(default=False)
+
 
 
 class Student(models.Model):
@@ -31,4 +33,4 @@ class Student(models.Model):
 class Results(models.Model):
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
     points =models.FloatField(default=0)
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    student = models.ForeignKeyl(Student, on_delete=models.CASCADE)
