@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cd5bce81-afe7-471e-a417-da19a5860489" name="Default" comment="hopefully fixed the models">
+    <list default="true" id="cd5bce81-afe7-471e-a417-da19a5860489" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/Exam/migrations/0001_initial.py" afterPath="$PROJECT_DIR$/Exam/migrations/0001_initial.py" />
+      <change beforePath="$PROJECT_DIR$/Exam/migrations/0002_auto_20171213_2208.py" afterPath="" />
       <change beforePath="$PROJECT_DIR$/Exam/models.py" afterPath="$PROJECT_DIR$/Exam/models.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -52,19 +54,68 @@
       <file leaf-file-name="login.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/login.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="29" column="45" lean-forward="false" selection-start-line="29" selection-start-column="45" selection-end-line="29" selection-end-column="45" />
+            <state relative-caret-position="629">
+              <caret line="37" column="45" lean-forward="false" selection-start-line="37" selection-start-column="45" selection-end-line="37" selection-end-column="45" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Exam/models.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="187">
-              <caret line="12" column="64" lean-forward="false" selection-start-line="12" selection-start-column="64" selection-end-line="12" selection-end-column="64" />
+              <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DjangoModelDependency/#DBProject" pinned="false" current-in-tab="true">
+        <entry file="uml://DjangoModelDependency/#DBProject">
+          <provider selected="true" editor-type-id="UmlEditorProvider">
+            <state>
+              <ID>DjangoModelDependency</ID>
+              <OriginalElement>#DBProject</OriginalElement>
+              <nodes>
+                <node x="322.0" y="0.0">Exam.models.Student</node>
+                <node x="169.0" y="0.0">Exam.models.Exam</node>
+                <node x="260.875" y="79.0">Exam.models.Results</node>
+                <node x="61.875" y="79.0">Exam.models.Question</node>
+                <node x="0.0" y="0.0">Exam.models.Answers</node>
+              </nodes>
+              <notes />
+              <edges>
+                <edge source="Exam.models.Question" target="Exam.models.Exam">
+                  <point x="38.25" y="-14.5" />
+                  <point x="176.625" y="54.0" />
+                  <point x="202.25" y="54.0" />
+                  <point x="-33.25" y="14.5" />
+                </edge>
+                <edge source="Exam.models.Results" target="Exam.models.Student">
+                  <point x="35.5" y="-14.5" />
+                  <point x="367.375" y="54.0" />
+                  <point x="395.0" y="54.0" />
+                  <point x="0.0" y="14.5" />
+                </edge>
+                <edge source="Exam.models.Results" target="Exam.models.Exam">
+                  <point x="-35.5" y="-14.5" />
+                  <point x="296.375" y="54.0" />
+                  <point x="268.75" y="54.0" />
+                  <point x="33.25" y="14.5" />
+                </edge>
+                <edge source="Exam.models.Question" target="Exam.models.Answers">
+                  <point x="-38.25" y="-14.5" />
+                  <point x="100.125" y="54.0" />
+                  <point x="74.5" y="54.0" />
+                  <point x="0.0" y="14.5" />
+                </edge>
+              </edges>
+              <settings layout="Hierarchic Group" zoom="1.0" x="234.0" y="54.0" />
+              <SelectedNodes>
+                <node>Exam.models.Answers</node>
+              </SelectedNodes>
+              <Categories />
             </state>
           </provider>
         </entry>
@@ -72,18 +123,8 @@
       <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="578">
-              <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="14" lean-forward="false" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
+            <state relative-caret-position="527">
+              <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -115,7 +156,7 @@
         <entry file="file://$PROJECT_DIR$/templates/_topbar.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="272">
-              <caret line="16" column="30" lean-forward="false" selection-start-line="16" selection-start-column="30" selection-end-line="16" selection-end-column="30" />
+              <caret line="16" column="17" lean-forward="false" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -202,6 +243,12 @@
               <item name="DBProject" type="b2602c69:ProjectViewProjectNode" />
               <item name="DBProject" type="462c0819:PsiDirectoryNode" />
               <item name="Exam" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DBProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DBProject" type="462c0819:PsiDirectoryNode" />
+              <item name="Exam" type="462c0819:PsiDirectoryNode" />
+              <item name="migrations" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="DBProject" type="b2602c69:ProjectViewProjectNode" />
@@ -384,7 +431,21 @@
       <option name="project" value="LOCAL" />
       <updated>1513461834153</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Im a dumb ass">
+      <created>1513462088630</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1513462088630</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Im a dumb ass">
+      <created>1513462126076</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1513462126076</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -398,7 +459,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1273" y="0" width="1294" height="1087" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32655138" sideWeight="0.4984375" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32655138" sideWeight="0.5015625" order="7" side_tool="true" content_ui="tabs" />
@@ -408,7 +468,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28038898" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="manage.py@DBProject" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3286638" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="manage.py@DBProject" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3286638" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -462,7 +522,8 @@
     <MESSAGE value="signup is an empty shell" />
     <MESSAGE value="centered shit a bit better, bootstrap is hard" />
     <MESSAGE value="hopefully fixed the models" />
-    <option name="LAST_COMMIT_MESSAGE" value="hopefully fixed the models" />
+    <MESSAGE value="Im a dumb ass" />
+    <option name="LAST_COMMIT_MESSAGE" value="Im a dumb ass" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -771,25 +832,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="uml://DjangoModelDependency/#DBProject">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>DjangoModelDependency</ID>
-          <OriginalElement>#DBProject</OriginalElement>
-          <nodes>
-            <node x="" y="">Exam.models.Exam</node>
-            <node x="" y="">Exam.models.Question</node>
-            <node x="" y="">Exam.models.Answers</node>
-          </nodes>
-          <notes />
-          <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="98.0" y="94.0" />
-          <SelectedNodes />
-          <Categories />
-          <SCOPE>All</SCOPE>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Exam/static/base.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -847,8 +889,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+        <state relative-caret-position="527">
+          <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -856,7 +898,7 @@
     <entry file="file://$PROJECT_DIR$/templates/_topbar.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
-          <caret line="16" column="30" lean-forward="false" selection-start-line="16" selection-start-column="30" selection-end-line="16" selection-end-column="30" />
+          <caret line="16" column="17" lean-forward="false" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
           <folding />
         </state>
       </provider>
@@ -881,8 +923,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/login.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="29" column="45" lean-forward="false" selection-start-line="29" selection-start-column="45" selection-end-line="29" selection-end-column="45" />
+        <state relative-caret-position="629">
+          <caret line="37" column="45" lean-forward="false" selection-start-line="37" selection-start-column="45" selection-end-line="37" selection-end-column="45" />
           <folding />
         </state>
       </provider>
@@ -898,8 +940,55 @@
     <entry file="file://$PROJECT_DIR$/Exam/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
-          <caret line="12" column="64" lean-forward="false" selection-start-line="12" selection-start-column="64" selection-end-line="12" selection-end-column="64" />
+          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://DjangoModelDependency/#DBProject">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>DjangoModelDependency</ID>
+          <OriginalElement>#DBProject</OriginalElement>
+          <nodes>
+            <node x="322.0" y="0.0">Exam.models.Student</node>
+            <node x="169.0" y="0.0">Exam.models.Exam</node>
+            <node x="260.875" y="79.0">Exam.models.Results</node>
+            <node x="61.875" y="79.0">Exam.models.Question</node>
+            <node x="0.0" y="0.0">Exam.models.Answers</node>
+          </nodes>
+          <notes />
+          <edges>
+            <edge source="Exam.models.Question" target="Exam.models.Exam">
+              <point x="38.25" y="-14.5" />
+              <point x="176.625" y="54.0" />
+              <point x="202.25" y="54.0" />
+              <point x="-33.25" y="14.5" />
+            </edge>
+            <edge source="Exam.models.Results" target="Exam.models.Student">
+              <point x="35.5" y="-14.5" />
+              <point x="367.375" y="54.0" />
+              <point x="395.0" y="54.0" />
+              <point x="0.0" y="14.5" />
+            </edge>
+            <edge source="Exam.models.Results" target="Exam.models.Exam">
+              <point x="-35.5" y="-14.5" />
+              <point x="296.375" y="54.0" />
+              <point x="268.75" y="54.0" />
+              <point x="33.25" y="14.5" />
+            </edge>
+            <edge source="Exam.models.Question" target="Exam.models.Answers">
+              <point x="-38.25" y="-14.5" />
+              <point x="100.125" y="54.0" />
+              <point x="74.5" y="54.0" />
+              <point x="0.0" y="14.5" />
+            </edge>
+          </edges>
+          <settings layout="Hierarchic Group" zoom="1.0" x="234.0" y="54.0" />
+          <SelectedNodes>
+            <node>Exam.models.Answers</node>
+          </SelectedNodes>
+          <Categories />
         </state>
       </provider>
     </entry>
