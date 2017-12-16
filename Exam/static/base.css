@@ -9,6 +9,11 @@ body {
     background-color: #ffffff;
 }
 
+.center {
+    text-align: center;
+    margin:0 auto;
+}
+
 .navbar {
     background-color: #00BE99;
 }
