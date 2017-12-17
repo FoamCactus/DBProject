@@ -45,6 +45,7 @@ def postNewExam(request):
         questions = data["questions"];
         exam["questions"] = {};
         questionNumber = 1;
+        answerNumber = 1;
         for question in questions:
             currentQuestion = "question_" 
             currentQuestion += str(questionNumber);
@@ -55,7 +56,6 @@ def postNewExam(request):
             exam["questions"][currentQuestion]["title"] = questionTitle;
             exam["questions"][currentQuestion]["points"] = questionPoints;
             exam["questions"][currentQuestion]["answers"] = {};
-            answerNumber = 1;
             answerList = questions[question]["answers"];
             for answer in answerList:
                 currentAnswer = "answer_"

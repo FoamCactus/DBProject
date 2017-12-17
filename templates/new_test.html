@@ -24,8 +24,8 @@ function submitExam() {
     // Create the form manually because jesus hates me
     form.examName = $('#examName').val();
     form.totalPoints = parseInt($('#ExamPoints').val(),10);
+    form["questions"] = {};  
     $('.question').each(function(i, obj) {
-      form["questions"] = {};  
       let currentQuestion = "question" + (i+1);
    	  form["questions"][currentQuestion] = {};
 	$(this).find('.questionName').each(function(j) { 
@@ -34,13 +34,12 @@ function submitExam() {
 	$(this).find('.questionPoints').each(function(j) { 
       form["questions"][currentQuestion].points = parseInt($(this).val(),10);
 	});
+     form["questions"][currentQuestion]["answers"] = {};
         $(this).find('.answerGroup').each(function(j){
-            form["questions"][currentQuestion]["answers"] = {};
             let currentAnswer = "answer" + (j+1);
             form["questions"][currentQuestion]["answers"][currentAnswer] = {};
 			$(this).find('#correctAnswer').each(function(k){
 			form["questions"][currentQuestion]["answers"][currentAnswer].answerText = $(this).val();
-
             });
             $(this).find('.correctAnswer').each(function(k){
              form["questions"][currentQuestion]["answers"][currentAnswer].correct = $(this).is(":checked");
