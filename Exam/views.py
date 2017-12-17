@@ -8,7 +8,6 @@ from .forms import *
 import logging
 logger = logging.getLogger(__name__)
 
-
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
@@ -20,9 +19,15 @@ def new_test(request):
     return render(request, 'new_test.html')
 
 def studentSignIn(request):
+    data = {}
     if request.method == "POST":
         get_value= request.body
-    data = {}
+        data = json.loads(request.body);
+        #TODO add / update this user to the DB using the below
+        userId = data["userId"];
+        userName = data["userName"];
+        email = data["userEmail"];
+        logger.error(userId + " " + userName + " "+ email);
     return HttpResponse(json.dumps(data), content_type="application/json")
 
 def postNewExam(request):
@@ -30,10 +35,8 @@ def postNewExam(request):
     if request.method == "POST":
         get_value= request.body
         data=json.loads(request.body);
-    logger.error(data);
+        logger.error(data);
     return HttpResponse(json.dumps(data), content_type="application/json")
-
-
 
 def signup(request):
     if request.method == 'POST':
@@ -52,7 +55,6 @@ def signup(request):
 
 def success(request):
     return render(request, 'success.html')
-
 
 def makeexam(request):
     if request.method == "POST":
