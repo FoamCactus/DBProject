@@ -2,7 +2,8 @@
 {% block title %} Make Questions {% endblock %}
 {% block content %}
 <h3> Make Questions</h3>
-    <form>
+    <form method="POST">
+    {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Make Question </button>
     </form>
