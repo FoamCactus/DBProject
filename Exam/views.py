@@ -27,7 +27,9 @@ def studentSignIn(request):
         userId = data["userId"];
         userName = data["userName"];
         email = data["userEmail"];
-        logger.error(userId + " " + userName + " "+ email);
+        logger.error(userId + " " + userName + " " + email);
+        user = authenticate(username=email, password=userId)
+        login(request)
     return HttpResponse(json.dumps(data), content_type="application/json")
 
 def postNewExam(request):
@@ -68,6 +70,7 @@ def postNewExam(request):
                 exam["questions"][currentQuestion]["answers"][currentAnswer]["correct"] = answerCorrect;
     logger.error(exam);
     return HttpResponse(json.dumps(data), content_type="application/json")
+
 
 def signup(request):
     if request.method == 'POST':

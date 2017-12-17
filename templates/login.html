@@ -29,7 +29,6 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function() {
-        console.log(Cookies.get("account"));
         if(Cookies.get("account") != null){ 
             $("#login").html("<button class='btn btn-primary' onclick='signOut()'>Sign Out</button>");
         } else {
