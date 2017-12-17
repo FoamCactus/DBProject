@@ -8,19 +8,30 @@
 //  - Caden	
     
 let total_questions = 0;
-let total_points = $("#ExamPoints").val();
-    
+
+function submitExam() {
+    let total_points = $("#ExamPoints").val();
+    console.log(total_points);
+    if(!total_points){
+        $.alert({
+            title: "Error",
+            type: "red",
+            content: "Please add at least one question"
+        });
+        return false;
+    }
+    return true;
+}    
 function updateTotalPoints() {
-    let sum = "";
+    let sum = 0;
     $('.questionPoints').each(function(i, obj) {
-     sum += $(this).val();
+        if($(this).val()){
+          sum += parseInt($(this).val(),10);
+        }
 	});
     $("#ExamPoints").val(sum);
 }    
 
-$(document).ready(function(e){
-
-});
 function addQuestion() {
     let questionNumber = ++total_questions;
     $(".questionContainer").append(
@@ -33,7 +44,7 @@ function addQuestion() {
   <div class="col-md-5">
     <div class="input-group">
       <span class="input-group-addon">Question `+questionNumber+`</span>
-      <input id="Question`+questionNumber+`" name="Question`+questionNumber+`" class="form-control questionName `+questionNumber+`" placeholder="Question `+questionNumber+`" type="text">
+      <input id="Question`+questionNumber+`" name="Question`+questionNumber+`" class="form-control questionName `+questionNumber+`" placeholder="Question `+questionNumber+`" type="text" required>
     </div>
   </div>
 </div>
@@ -56,7 +67,7 @@ function addQuestion() {
       <span class="input-group-addon">     
           <input class="correctAnswer 1" type="checkbox">     
       </span>
-      <input id="correctAnswer" name="correctAnswer" class="form-control" type="text" placeholder="Answer 1">
+      <input id="correctAnswer" name="correctAnswer" class="form-control" type="text" placeholder="Answer 1" required>
     </div>
   </div>
         <button class="btn btn-primary" onclick="return addOption('`+questionNumber+`')">
@@ -94,6 +105,7 @@ function addOption(questionNumber){
     
 </script>
 <form class="form-horizontal" method="POST">
+     {% csrf_token %}
 <fieldset>
 
 <!-- Form Name -->
@@ -129,7 +141,7 @@ function addOption(questionNumber){
         </div></div>
 <div class="form-group">
   <div class=" row col-md-12" align="center">
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn btn-primary" onclick="return submitExam()">
     Create Exam
     </button>
             </div>
