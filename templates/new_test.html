@@ -9,23 +9,24 @@
     
 let total_questions = 0;
 let total_points = $("#TestPoints").val();
+    
+function updateTotalPoints() {
+    let sum = "";
+    $('.questionPoints').each(function(i, obj) {
+     sum += $(this).val();
+	});
+    $("#TestPoints").val(sum);
+}    
 
 $(document).ready(function(e){
-     $(".correctAnswer").change(function() {
-        var questionNumber = $(this).attr("class").split(' ')[1];
-		$('.correctAnswer').click(function() {
-            console.log("CHECKED " + this);
-	  			$('.options' +"."+questionNumber).not(this).prop('checked', false);
-		});
-	});
- 
-});
 
+});
 function addQuestion() {
     let questionNumber = ++total_questions;
     $(".questionContainer").append(
         `
     <div class="question `+questionNumber+`" >
+<h2 class="questionName `+questionNumber+`"> Quesiton `+questionNumber+`</h2>
 <!-- Prepended text-->
 <div class="form-group">
   <label class="col-md-4 control-label" for="Question`+questionNumber+`"></label>
@@ -37,35 +38,54 @@ function addQuestion() {
   </div>
 </div>
 
+<div class="form-group">
+  <label class="col-md-4 control-label" for="QuestionPoints `+questionNumber+`"></label>
+  <div class="col-md-5">
+    <div class="input-group">
+      <span class="input-group-addon">Question Points</span>
+      <input id="QuestionPoints`+questionNumber+`" name="QuestionPoints `+questionNumber+`" class="form-control questionPoints" placeholder="Question Points" type="number" required>
+    </div>
+  </div>
+</div>
+
 <!-- Prepended checkbox -->
-<div class="form-group options1">
+<div class="form-group options`+questionNumber+`">
   <label class="col-md-4 control-label" for="correctAnswer"></label>
   <div class="col-md-4 option 1">
     <div class="input-group">
       <span class="input-group-addon">     
           <input class="correctAnswer 1" type="checkbox">     
       </span>
-      <input id="correctAnswer" name="correctAnswer" class="form-control" type="text" placeholder="Option 1">
+      <input id="correctAnswer" name="correctAnswer" class="form-control" type="text" placeholder="Answer 1">
     </div>
   </div>
-        <button class="btn btn-primary" onclick="return addOption('1')">
+        <button class="btn btn-primary" onclick="return addOption('`+questionNumber+`')">
         Add Option
     </button>
 </div>
     </div>
-	`);
+	`);    
+    
+$(".questionPoints").on('keyup change click', function() {
+    updateTotalPoints();
+	});
+$(function(){
+  $('#Question'+questionNumber).change(function(){
+     $('.questionName'+'.'+questionNumber).text($(this).val());
+  });
+});
     return false;
 }
     
 function addOption(questionNumber){
-    let thisOptionNumber = $(".options" + questionNumber + ".correctAnswer").length + 1;
+    let thisOptionNumber = $(".options" + questionNumber + " .correctAnswer").length + 1;
     $(".options"+questionNumber).append(`<br/><br/><label class="col-md-4 control-label" for="correctAnswer"></label>
-  <div class="col-md-4 option "` +  thisOptionNumber + `>
+  <div class="col-md-4 option ` +  thisOptionNumber + `">
     <div class="input-group">
       <span class="input-group-addon">     
           <input class="correctAnswer ` + thisOptionNumber+ `" type="checkbox">     
       </span>
-      <input id="correctAnswer" name="correctAnswer" class="form-control" type="text" placeholder="Option ` + thisOptionNumber + `">
+      <input id="correctAnswer" name="correctAnswer" class="form-control" type="text" placeholder="Answer ` + thisOptionNumber + `">
     </div>
   </div>`);
     return false;
@@ -90,13 +110,12 @@ function addOption(questionNumber){
     
   </div>
 </div>
-    
 <div class="form-group">
   <label class="col-md-4 control-label" for="TestPoints"></label>
   <div class="col-md-5">
     <div class="input-group">
       <span class="input-group-addon">Test Points</span>
-      <input id="TestPoints" name="TestPoints" class="form-control" placeholder="Test Points" type="number" required>
+      <input id="TestPoints" name="TestPoints" class="form-control" placeholder="Will Be Calculated" type="number" disabled>
     </div>
   </div>
 </div>
