@@ -25,23 +25,25 @@ function submitExam() {
     form.examName = $('#examName').val();
     form.totalPoints = parseInt($('#ExamPoints').val(),10);
     $('.question').each(function(i, obj) {
+      form["questions"] = {};  
       let currentQuestion = "question" + (i+1);
-   	  form[currentQuestion] = {};
+   	  form["questions"][currentQuestion] = {};
 	$(this).find('.questionName').each(function(j) { 
-      form[currentQuestion].title = $(this).val();
+      form["questions"][currentQuestion].title = $(this).val();
 	});
 	$(this).find('.questionPoints').each(function(j) { 
-      form[currentQuestion].points = parseInt($(this).val(),10);
+      form["questions"][currentQuestion].points = parseInt($(this).val(),10);
 	});
         $(this).find('.answerGroup').each(function(j){
+            form["questions"][currentQuestion]["answers"] = {};
             let currentAnswer = "answer" + (j+1);
-            form[currentQuestion][currentAnswer] = {};
+            form["questions"][currentQuestion]["answers"][currentAnswer] = {};
 			$(this).find('#correctAnswer').each(function(k){
-			form[currentQuestion][currentAnswer].answerText = $(this).val();
+			form["questions"][currentQuestion]["answers"][currentAnswer].answerText = $(this).val();
 
             });
             $(this).find('.correctAnswer').each(function(k){
-             form[currentQuestion][currentAnswer].correct = $(this).is(":checked");
+             form["questions"][currentQuestion]["answers"][currentAnswer].correct = $(this).is(":checked");
             });
         });
     });

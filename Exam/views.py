@@ -32,10 +32,41 @@ def studentSignIn(request):
 
 def postNewExam(request):
     data = {}
+    exam = {};
     if request.method == "POST":
+        #The full, ready to put in DB exam object
         get_value= request.body
         data=json.loads(request.body);
-        logger.error(data);
+        examName = data["examName"];
+        totalPoints = data["totalPoints"];
+        exam["name"] = examName;
+        exam["points"] = totalPoints;
+        # get question list
+        questions = data["questions"];
+        exam["questions"] = {};
+        questionNumber = 1;
+        for question in questions:
+            currentQuestion = "question_" 
+            currentQuestion += str(questionNumber);
+            questionNumber += 1;
+            exam["questions"][currentQuestion] = {};
+            questionTitle = questions[question]["title"];
+            questionPoints = questions[question]["points"];
+            exam["questions"][currentQuestion]["title"] = questionTitle;
+            exam["questions"][currentQuestion]["points"] = questionPoints;
+            exam["questions"][currentQuestion]["answers"] = {};
+            answerNumber = 1;
+            answerList = questions[question]["answers"];
+            for answer in answerList:
+                currentAnswer = "answer_"
+                currentAnswer += str(answerNumber);
+                answerNumber += 1;
+                exam["questions"][currentQuestion]["answers"][currentAnswer] = {};
+                answerText = answerList[answer]["answerText"];
+                answerCorrect = answerList[answer]["correct"];
+                exam["questions"][currentQuestion]["answers"][currentAnswer]["answerText"] = answerText;
+                exam["questions"][currentQuestion]["answers"][currentAnswer]["correct"] = answerCorrect;
+    logger.error(exam);
     return HttpResponse(json.dumps(data), content_type="application/json")
 
 def signup(request):
