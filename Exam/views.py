@@ -5,6 +5,8 @@ from django.contrib.auth import login,authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from .forms import *
+import logging
+logger = logging.getLogger(__name__)
 
 
 # Create your views here.
@@ -22,6 +24,16 @@ def studentSignIn(request):
         get_value= request.body
     data = {}
     return HttpResponse(json.dumps(data), content_type="application/json")
+
+def postNewExam(request):
+    data = {}
+    if request.method == "POST":
+        get_value= request.body
+        data=json.loads(request.body);
+    logger.error(data);
+    return HttpResponse(json.dumps(data), content_type="application/json")
+
+
 
 def signup(request):
     if request.method == 'POST':

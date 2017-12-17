@@ -10,8 +10,8 @@
 let total_questions = 0;
 
 function submitExam() {
+      
     let total_points = $("#ExamPoints").val();
-    console.log(total_points);
     if(!total_points){
         $.alert({
             title: "Error",
@@ -20,7 +20,52 @@ function submitExam() {
         });
         return false;
     }
-    return true;
+    let form = {};
+    // Create the form manually because jesus hates me
+    form.examName = $('#examName').val();
+    form.totalPoints = $('#ExamPoints').val();
+    $('.question').each(function(i, obj) {
+      let currentQuestion = "question" + (i+1);
+   	  form[currentQuestion] = {};
+	$(this).find('.questionName').each(function(j) { 
+      form[currentQuestion].title = $(this).val();
+	});
+	$(this).find('.questionPoints').each(function(j) { 
+      form[currentQuestion].points = $(this).val();
+	});
+        $(this).find('.answerGroup').each(function(j){
+            let currentAnswer = "answer" + (j+1);
+            form[currentQuestion][currentAnswer] = {};
+			$(this).find('#correctAnswer').each(function(k){
+			form[currentQuestion][currentAnswer].answerText = $(this).val();
+
+            });
+            $(this).find('.correctAnswer').each(function(k){
+             form[currentQuestion][currentAnswer].correct = $(this).is(":checked");
+            });
+        });
+    });
+    
+    $.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+            xhr.setRequestHeader("X-CSRFToken", Cookies.get('csrftoken'));
+        }
+	});
+    $.ajax({
+       type: "POST",
+       contentType: "application/json; charset=utf-8",
+       dataType: "json",
+       url: "/postNewExam/",
+       data: JSON.stringify(form),
+       success: function(data) {
+           		window.location="/";
+    		},
+        error: function(error) {
+        	console.log(error);
+        }
+    });
+    
+    return false;
 }    
 function updateTotalPoints() {
     let sum = 0;
@@ -37,7 +82,7 @@ function addQuestion() {
     $(".questionContainer").append(
         `
     <div class="question `+questionNumber+`" >
-<h2 class="questionName `+questionNumber+`"> Quesiton `+questionNumber+`</h2>
+<h2 class="questionTitle `+questionNumber+`"> Quesiton `+questionNumber+`</h2>
 <!-- Prepended text-->
 <div class="form-group">
   <label class="col-md-4 control-label" for="Question`+questionNumber+`"></label>
@@ -63,7 +108,7 @@ function addQuestion() {
 <div class="form-group options`+questionNumber+`">
   <label class="col-md-4 control-label" for="correctAnswer"></label>
   <div class="col-md-4 option 1">
-    <div class="input-group">
+    <div class="input-group answerGroup">
       <span class="input-group-addon">     
           <input class="correctAnswer 1" type="checkbox">     
       </span>
@@ -82,7 +127,7 @@ $(".questionPoints").on('keyup change click', function() {
 	});
 $(function(){
   $('#Question'+questionNumber).change(function(){
-     $('.questionName'+'.'+questionNumber).text($(this).val());
+     $('.questionTitle'+'.'+questionNumber).text($(this).val());
   });
 });
     return false;
@@ -92,11 +137,11 @@ function addOption(questionNumber){
     let thisOptionNumber = $(".options" + questionNumber + " .correctAnswer").length + 1;
     $(".options"+questionNumber).append(`<br/><br/><label class="col-md-4 control-label" for="correctAnswer"></label>
   <div class="col-md-4 option ` +  thisOptionNumber + `">
-    <div class="input-group">
+    <div class="input-group answerGroup">
       <span class="input-group-addon">     
           <input class="correctAnswer ` + thisOptionNumber+ `" type="checkbox">     
       </span>
-      <input id="correctAnswer" name="correctAnswer" class="form-control" type="text" placeholder="Answer ` + thisOptionNumber + `">
+      <input id="correctAnswer" name="correctAnswer" class="answerText form-control" type="text" placeholder="Answer ` + thisOptionNumber + `">
     </div>
   </div>`);
     return false;
@@ -104,20 +149,20 @@ function addOption(questionNumber){
     
     
 </script>
-<form class="form-horizontal" method="POST">
-     {% csrf_token %}
+<form action="/postNewExam/" class="form-horizontal" method="POST">
 <fieldset>
+     {% csrf_token %}
 
 <!-- Form Name -->
 <legend>New Exam</legend>
 
 <!-- Prepended text-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="prependedtext"></label>
+  <label class="col-md-4 control-label" for="examName"></label>
   <div class="col-md-5">
     <div class="input-group">
       <span class="input-group-addon">Exam Name</span>
-      <input id="prependedtext" name="prependedtext" class="form-control" placeholder="Exam Name" type="text" required>
+      <input id="examName" name="examName" class="form-control" placeholder="Exam Name" type="text" required>
     </div>
     
   </div>
