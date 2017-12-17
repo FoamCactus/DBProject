@@ -4,6 +4,7 @@ import json
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
+from .forms import *
 
 
 # Create your views here.
@@ -35,3 +36,20 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
+
+def success(request):
+    return render(request, 'success.html')
+
+
+
+def makeExam(request):
+    if request.method == "POST":
+        form = ExamForm(request.POST)
+        if form.is_valid():
+            exam = form.save(commit=False)
+            exam.points = 10
+            exam.save()
+            return redirect('success')
+    else:
+        form = ExamForm()
+        return render(request,'makeExam.html', {'form':form})
