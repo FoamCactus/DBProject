@@ -13,11 +13,15 @@ def index(request):
 def login(request):
     return render(request, 'login.html')
 
+def new_test(request):
+    return render(request, 'new_test.html')
+
 def studentSignIn(request):
     if request.method == "POST":
         get_value= request.body
     data = {}
     return HttpResponse(json.dumps(data), content_type="application/json")
+
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)

@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block title %} New Test {% endblock %}
+{%  block content %}
+    
+
+<script type="text/javascript">
+// Please don't judge this code
+//  - Caden	
+    
+let total_questions = $('.question').length;
+let total_points = $("#TestPoints").val();
+
+$(document).ready(function(e){
+    $(".correctAnswer").change(function() {
+    console.log(this);
+	});
+});
+
+    
+function addOption(questionNumber){
+    let thisOptionNumber = $(".options" + questionNumber + " .correctAnswer").length + 1;
+    $(".options"+questionNumber).append(`<br/><br/><label class="col-md-4 control-label" for="correctAnswer"></label>
+  <div class="col-md-4 option "` +  thisOptionNumber + `>
+    <div class="input-group">
+      <span class="input-group-addon">     
+          <input class="correctAnswer ` + thisOptionNumber+ `" type="checkbox">     
+      </span>
+      <input id="correctAnswer" name="correctAnswer" class="form-control" type="text" placeholder="Option ` + thisOptionNumber + `">
+    </div>
+  </div>`);
+    return false;
+}
+    
+    
+</script>
+<form class="form-horizontal">
+<fieldset>
+
+<!-- Form Name -->
+<legend>New Test</legend>
+
+<!-- Prepended text-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="prependedtext"></label>
+  <div class="col-md-5">
+    <div class="input-group">
+      <span class="input-group-addon">Test Name</span>
+      <input id="prependedtext" name="prependedtext" class="form-control" placeholder="Test Name" type="text">
+    </div>
+    
+  </div>
+</div>
+    
+<div class="form-group">
+  <label class="col-md-4 control-label" for="TestPoints"></label>
+  <div class="col-md-5">
+    <div class="input-group">
+      <span class="input-group-addon">Test Points</span>
+      <input id="TestPoints" name="TestPoints" class="form-control" placeholder="100" type="number">
+    </div>
+  </div>
+</div>
+    <hr/>
+    
+<div class="question 1" >
+<!-- Prepended text-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="Question1"></label>
+  <div class="col-md-5">
+    <div class="input-group">
+      <span class="input-group-addon">Question 1</span>
+      <input id="Question1" name="Question1" class="form-control questionName 1" placeholder="Question 1" type="text">
+    </div>
+  </div>
+</div>
+
+<!-- Prepended checkbox -->
+<div class="form-group options1">
+  <label class="col-md-4 control-label" for="correctAnswer"></label>
+  <div class="col-md-4 option 1">
+    <div class="input-group">
+      <span class="input-group-addon">     
+          <input class="correctAnswer 1" type="checkbox">     
+      </span>
+      <input id="correctAnswer" name="correctAnswer" class="form-control" type="text" placeholder="Option 1">
+    </div>
+  </div>
+        <button class="btn btn-primary" onclick="return addOption('1')">
+        Add Option
+    </button>
+</div>
+    </div>
+    
+    <hr/>
+
+<div class="form-group">
+  <div class=" row col-md-12" align="center">
+        <button class="btn btn-primary">
+    Submit Form
+    </button>
+            </div>
+  </div>
+
+</fieldset>
+</form>
+
+
+{% endblock %}
