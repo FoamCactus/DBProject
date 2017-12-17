@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %} New Test {% endblock %}
+{% block title %} New Exam {% endblock %}
 {%  block content %}
     
 
@@ -8,14 +8,14 @@
 //  - Caden	
     
 let total_questions = 0;
-let total_points = $("#TestPoints").val();
+let total_points = $("#ExamPoints").val();
     
 function updateTotalPoints() {
     let sum = "";
     $('.questionPoints').each(function(i, obj) {
      sum += $(this).val();
 	});
-    $("#TestPoints").val(sum);
+    $("#ExamPoints").val(sum);
 }    
 
 $(document).ready(function(e){
@@ -97,25 +97,25 @@ function addOption(questionNumber){
 <fieldset>
 
 <!-- Form Name -->
-<legend>New Test</legend>
+<legend>New Exam</legend>
 
 <!-- Prepended text-->
 <div class="form-group">
   <label class="col-md-4 control-label" for="prependedtext"></label>
   <div class="col-md-5">
     <div class="input-group">
-      <span class="input-group-addon">Test Name</span>
-      <input id="prependedtext" name="prependedtext" class="form-control" placeholder="Test Name" type="text" required>
+      <span class="input-group-addon">Exam Name</span>
+      <input id="prependedtext" name="prependedtext" class="form-control" placeholder="Exam Name" type="text" required>
     </div>
     
   </div>
 </div>
 <div class="form-group">
-  <label class="col-md-4 control-label" for="TestPoints"></label>
+  <label class="col-md-4 control-label" for="ExamPoints"></label>
   <div class="col-md-5">
     <div class="input-group">
-      <span class="input-group-addon">Test Points</span>
-      <input id="TestPoints" name="TestPoints" class="form-control" placeholder="Will Be Calculated" type="number" disabled>
+      <span class="input-group-addon">Exam Points</span>
+      <input id="ExamPoints" name="ExamPoints" class="form-control" placeholder="Will Be Calculated" type="number" disabled>
     </div>
   </div>
 </div>
@@ -130,7 +130,7 @@ function addOption(questionNumber){
 <div class="form-group">
   <div class=" row col-md-12" align="center">
         <button type="submit" class="btn btn-primary">
-    Create Test
+    Create Exam
     </button>
             </div>
   </div>
