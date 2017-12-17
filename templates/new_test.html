@@ -23,7 +23,7 @@ function submitExam() {
     let form = {};
     // Create the form manually because jesus hates me
     form.examName = $('#examName').val();
-    form.totalPoints = $('#ExamPoints').val();
+    form.totalPoints = parseInt($('#ExamPoints').val(),10);
     $('.question').each(function(i, obj) {
       let currentQuestion = "question" + (i+1);
    	  form[currentQuestion] = {};
@@ -31,7 +31,7 @@ function submitExam() {
       form[currentQuestion].title = $(this).val();
 	});
 	$(this).find('.questionPoints').each(function(j) { 
-      form[currentQuestion].points = $(this).val();
+      form[currentQuestion].points = parseInt($(this).val(),10);
 	});
         $(this).find('.answerGroup').each(function(j){
             let currentAnswer = "answer" + (j+1);
@@ -58,7 +58,26 @@ function submitExam() {
        url: "/postNewExam/",
        data: JSON.stringify(form),
        success: function(data) {
-           		window.location="/";
+           		$.confirm({
+                    title: "Exam Created!",
+                    content: "Create another or go to the home page?",
+                    buttons: {
+                        another: {
+                        	text: "Another one!",
+                            btnClass: "btn-primary",
+                        	action: function() {
+								window.location="/new_test";                        
+                        	}
+                        },
+                        home: {
+                        	text: "Go Home.",
+                        	btnClass: "btn-primary",
+                        	action: function() {
+                        	window.location="/";
+                        }
+                        }
+                    }
+                })
     		},
         error: function(error) {
         	console.log(error);
