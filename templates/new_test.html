@@ -131,7 +131,7 @@ function addQuestion() {
       <span class="input-group-addon">     
           <input class="correctAnswer 1" type="checkbox">     
       </span>
-      <input id="correctAnswer" name="correctAnswer" class="form-control" type="text" placeholder="Answer 1" required>
+      <input id="correctAnswer" name="correctAnswer" class="form-control" type="text" placeholder="Option 1" required>
     </div>
   </div>
         <button class="btn btn-primary" onclick="return addOption('`+questionNumber+`')">
@@ -160,7 +160,7 @@ function addOption(questionNumber){
       <span class="input-group-addon">     
           <input class="correctAnswer ` + thisOptionNumber+ `" type="checkbox">     
       </span>
-      <input id="correctAnswer" name="correctAnswer" class="answerText form-control" type="text" placeholder="Answer ` + thisOptionNumber + `">
+      <input id="correctAnswer" name="correctAnswer" class="answerText form-control" type="text" placeholder="Option ` + thisOptionNumber + `">
     </div>
   </div>`);
     return false;
