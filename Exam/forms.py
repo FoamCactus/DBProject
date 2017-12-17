@@ -6,7 +6,7 @@ class ExamForm(forms.ModelForm):
 
     class Meta:
         model = Exam
-        fields = ('name',)
+        fields = ('name',"points")
 
 
 class QuestionForm(forms.ModelForm):
