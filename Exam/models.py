@@ -15,8 +15,8 @@ class Answers(models.Model):
 
 class Question(models.Model):
     examName = models.ForeignKey(Exam, on_delete=models.CASCADE)
-    text = models.CharField(max_length=280)
-    number = models.TextField(max_length=3)
+    text = models.TextField(max_length=280)
+    number = models.CharField(max_length=3)
     points = models.FloatField(default=1)
     answers = models.ForeignKey(Answers, on_delete=models.CASCADE, default=-1)
 
