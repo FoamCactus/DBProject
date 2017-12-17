@@ -37,19 +37,34 @@ def signup(request):
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
 
+
 def success(request):
     return render(request, 'success.html')
 
 
-
-def makeExam(request):
+def makeexam(request):
     if request.method == "POST":
         form = ExamForm(request.POST)
         if form.is_valid():
             exam = form.save(commit=False)
             exam.points = 10
             exam.save()
-            return redirect('success')
+            request.session['Exam'] = exam.name
+            return redirect('/makequestion')
     else:
         form = ExamForm()
-        return render(request,'makeExam.html', {'form':form})
+        return render(request,'makeExam.html', {'form':  form})
+
+
+def makequestion(request):
+    if request.method == 'POST':
+        form = QuestionForm()
+        if form.is_valid():
+            question = form.save(commit=False)
+            question.examName = request.session['Exam']
+            request.session['QNumber'] = question.number
+            question.save()
+            return redirect('success')
+    else:
+        form = QuestionForm()
+        return render(request, 'makequestions.html', {'form': form})

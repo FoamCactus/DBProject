@@ -13,4 +13,11 @@ class QuestionForm(forms.ModelForm):
 
     class Meta:
         model = Question
-        fields = ('number', 'text')
+        fields = ('number', 'text', 'points',)
+
+
+class AnswerForm(forms.ModelForm):
+
+    class Meta:
+        model = Answers
+        fields = ('answer', 'correct', )
