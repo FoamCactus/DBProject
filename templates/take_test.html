@@ -2,21 +2,19 @@
 {% block title %} Index {% endblock %}
 {%  block content %}
     <h1>
-     Good luck {{ request.user.first_name }}!
-        
+     Good luck {{ request.user.first_name }}!    
 </h1>
-<hr/>
-{% if exam %}
-<form>
-<h2>
+<h4>
     <small>You are taking</small>
 {{exam.name}}
     <small>worth {{exam.points}} Points </small>
-</h2>
-
+</h4>
+<hr/>
+<div class="card">
+  <div class="card-block">
+<form>
 {% if questions %}
 {% for key, value in questions.items %}
-<hr/>
 <h2>{{key}} <small>({{value.question.points}})</small></h2>
 <hr/>
 {% for answerNumber in value.answerGroup.items %}
@@ -37,8 +35,7 @@
 <button class="btn btn-primary">
     Submit Answers
 </button>
-    </form>
-
-{% endif %}
-
+</form>
+      </div>
+</div>
 {% endblock %}
