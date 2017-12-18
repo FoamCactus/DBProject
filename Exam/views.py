@@ -62,10 +62,10 @@ def studentSignIn(request):
 def postNewExam(request):
     data = {}
     exam = {};
+    logger.error(request.body);
     if request.method == "POST":
-        #The full, ready to put in DB exam object
-        get_value= request.body
         data=json.loads(request.body);
+        logger.error(data);
         examName = data["examName"];
         totalPoints = data["totalPoints"];
         exam["name"] = examName;
@@ -73,11 +73,9 @@ def postNewExam(request):
         # get question list
         questions = data["questions"];
         exam["questions"] = {};
-        
         # Create exam object + save in DB
         postExam = Exam(name = examName, points = totalPoints);
-        postExam.save();
-        
+        postExam.save();  
         questionNumber = 1;
         answerNumber = 1;
         for question in questions:
@@ -110,7 +108,6 @@ def postNewExam(request):
                 postQuestion.save();
 
                 answerNumber += 1;
-    logger.error(exam);
     return HttpResponse(json.dumps(data), content_type="application/json")
 
 

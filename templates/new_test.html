@@ -8,15 +8,26 @@
 //  - Caden	
     
 let total_questions = 0;
-
-function submitExam() {
-      
+$(function(){
+$("#newExam").submit(function(event) {
+        event.preventDefault();
+    var v = $("#newExam").validate();
+    if(v.valid()) {
     let total_points = $("#ExamPoints").val();
-    if(!total_points){
+    let total_options = $('.answerText').length;
+    if(!total_points || !total_points > 0){
         $.alert({
             title: "Error",
             type: "red",
             content: "Please add at least one question"
+        });
+        return false;
+   	 }
+        if(!total_options > 0){
+          $.alert({
+            title: "Error",
+            type: "red",
+            content: "Please add at least one option"
         });
         return false;
     }
@@ -46,12 +57,11 @@ function submitExam() {
             });
         });
     });
-    
     $.ajaxSetup({
     beforeSend: function(xhr, settings) {
             xhr.setRequestHeader("X-CSRFToken", Cookies.get('csrftoken'));
         }
-	});
+	});  
     $.ajax({
        type: "POST",
        contentType: "application/json; charset=utf-8",
@@ -67,7 +77,7 @@ function submitExam() {
                         	text: "Another one!",
                             btnClass: "btn-primary",
                         	action: function() {
-								window.location="/new_test";                        
+								window.location="/new_test";                 
                         	}
                         },
                         home: {
@@ -84,9 +94,13 @@ function submitExam() {
         	console.log(error);
         }
     });
-    
+    } else {
+    }
+});
     return false;
-}    
+    });
+    
+    
 function updateTotalPoints() {
     let sum = 0;
     $('.questionPoints').each(function(i, obj) {
@@ -107,8 +121,8 @@ function addQuestion() {
 <h2 class="questionTitle `+questionNumber+`"> Quesiton `+questionNumber+`</h2>
 <!-- Prepended text-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="Question`+questionNumber+`"></label>
-  <div class="col-md-5">
+  <label class="col-md-12 control-label" for="Question`+questionNumber+`"></label>
+  <div class="col-md-12">
     <div class="input-group">
       <span class="input-group-addon">Question Title</span>
       <input id="Question`+questionNumber+`" name="Question`+questionNumber+`" class="form-control questionName `+questionNumber+`" placeholder="Question Title" type="text" required>
@@ -117,8 +131,8 @@ function addQuestion() {
 </div>
 
 <div class="form-group">
-  <label class="col-md-4 control-label" for="QuestionPoints `+questionNumber+`"></label>
-  <div class="col-md-5">
+  <label class="col-md-12 control-label" for="QuestionPoints `+questionNumber+`"></label>
+  <div class="col-md-12">
     <div class="input-group">
       <span class="input-group-addon">Question Points</span>
       <input id="QuestionPoints`+questionNumber+`" name="QuestionPoints `+questionNumber+`" class="form-control questionPoints" placeholder="ex: 100" type="number" required>
@@ -139,6 +153,7 @@ function addQuestion() {
 $(".questionPoints").on('keyup change click', function() {
     updateTotalPoints();
 	});
+    
 $(function(){
   $('#Question'+questionNumber).change(function(){
      $('.questionTitle'+'.'+questionNumber).text($(this).val());
@@ -149,16 +164,17 @@ $(function(){
     
 function addOption(questionNumber){
     let thisOptionNumber = $(".options" + questionNumber + " .correctAnswer").length + 1;
-    $(".options"+questionNumber).append(`<label class="col-md-4 control-label" for="correctAnswer"></label>
-  <div class="col-md-4 option ` +  thisOptionNumber + `">
+    $(".options"+questionNumber).append(`
+  <div class="col-md-12 option ` +  thisOptionNumber + `">
+<br/>
     <div class="input-group answerGroup">
       <span class="input-group-addon">     
           <input class="correctAnswer ` + thisOptionNumber+ `" type="checkbox">     
       </span>
-      <input id="correctAnswer" name="correctAnswer" class="answerText form-control" type="text" placeholder="Option Text">
-
+      <input id="correctAnswer" name="correctAnswer" class="answerText form-control col-md-11" type="text" placeholder="Option Text" required>
+<button onclick="return removeOption('.options`+questionNumber+` .option.`+thisOptionNumber+`')" class='btn btn-primary col-md-1 removeOption'>X</button>
     </div>
-<button onclick="return removeOption('.options`+questionNumber+` .option.`+thisOptionNumber+`')" class='btn btn-primary'>Remove Option</button>
+
   </div>`);
     return false;
 }
@@ -176,17 +192,18 @@ function removeOption(optionToRemove) {
     
     
 </script>
-<form action="/postNewExam/" class="form-horizontal" method="POST">
+<div class="col-md-12">
+
+<form id="newExam" class="form-horizontal card" method="POST">
 <fieldset>
      {% csrf_token %}
-
-<!-- Form Name -->
-<legend>New Exam</legend>
-
+ <div class="card-header newExamHead">
+        Create New Exam
+  </div>
 <!-- Prepended text-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="examName"></label>
-  <div class="col-md-5">
+  <label class="col-md-12 control-label" for="examName"></label>
+  <div class="col-md-12">
     <div class="input-group">
       <span class="input-group-addon">Exam Name</span>
       <input id="examName" name="examName" class="form-control" placeholder="Exam Name" type="text" required>
@@ -195,8 +212,8 @@ function removeOption(optionToRemove) {
   </div>
 </div>
 <div class="form-group">
-  <label class="col-md-4 control-label" for="ExamPoints"></label>
-  <div class="col-md-5">
+  <label class="col-md-12 control-label" for="ExamPoints"></label>
+  <div class="col-md-12">
     <div class="input-group">
       <span class="input-group-addon">Exam Points</span>
       <input id="ExamPoints" name="ExamPoints" class="form-control" placeholder="Will Be Calculated" type="number" disabled>
@@ -204,16 +221,16 @@ function removeOption(optionToRemove) {
   </div>
 </div>
     <hr/>
-     <div class="questionContainer">
+     <div class="questionContainer col-md-12">
     </div>
     <div class="form-group">
-  <div class=" row col-md-12" align="center">
+  <div class="  col-md-12" align="center">
     <button class="btn btn-primary" onclick="return addQuestion()">Add Question</button>
     <hr/>
         </div></div>
 <div class="form-group">
-  <div class=" row col-md-12" align="center">
-        <button type="submit" class="btn btn-primary" onclick="return submitExam()">
+  <div class="col-md-12" align="center">
+        <button type="submit" class="btn btn-secondary">
     Create Exam
     </button>
             </div>
@@ -221,6 +238,7 @@ function removeOption(optionToRemove) {
 
 </fieldset>
 </form>
-
+    
+</div>
 
 {% endblock %}
