@@ -15,20 +15,26 @@ import logging
 logger = logging.getLogger(__name__)
 
 # Create your views here.
+
+
 @login_required(login_url='/login')
 def index(request):
     exams = Exam.objects.all();
     return render(request, 'index.html', { 'exams' : exams })
-   
+
+
 def logout(request):
     auth_logout(request)
     return HttpResponseRedirect("/login/")
 
+
 def login(request):
     return render(request, 'login.html')
 
+
 def new_test(request):
     return render(request, 'new_test.html')
+
 
 def studentSignIn(request):
     if request.method == "POST":
@@ -110,8 +116,11 @@ def signup(request):
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect('home')
+            if user is not None:
+                login(request)
+                return redirect('success')
+            else:
+                return redirect('home')
     else:
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
@@ -119,6 +128,7 @@ def signup(request):
 
 def success(request):
     return render(request, 'success.html')
+
 
 def makeexam(request):
     if request.method == "POST":
