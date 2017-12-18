@@ -120,6 +120,8 @@ def signup(request):
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
+            teacherGroup = Group.objects.get(name="Teachers");
+            teacherGroup.user_set.add(user);            
             if user is not None:
                 login(request)
                 return redirect('success')

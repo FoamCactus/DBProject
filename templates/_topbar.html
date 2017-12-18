@@ -1,3 +1,4 @@
+{% load auth_extras %}
 <nav class="navbar navbar-inverse navbar-static-top">
 	<div class="container">
 		<div class="navbar-header">
@@ -11,10 +12,14 @@
 		</div>
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#">About</a></li>
+				<!-- <li><a href="#">About</a></li> -->
+               <li><a href="/">View Exams</a> </li>
+				{% if request.user|has_group:"Teachers" %} 
+                <li><a href="/new_test">Create Exam</a> </li>
+				{% endif %}                
                 <li><a href="/login">Login</a> </li>
                 <li><a href="/logout">Logout</a> </li>
-				<li><a href="#">Contact</a></li>
+				<!-- <li><a href="#">Contact</a></li> -->
 			</ul>
 		</div>
 	</div>
