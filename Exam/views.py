@@ -2,17 +2,25 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import json
 from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout as auth_logout
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from .forms import *
 from django.contrib.auth.models import User
+from django.shortcuts import HttpResponseRedirect
 import logging
 logger = logging.getLogger(__name__)
 
 # Create your views here.
+@login_required(login_url='/login')
 def index(request):
     return render(request, 'index.html')
+
+def logout(request):
+    auth_logout(request)
+    return HttpResponseRedirect("/login/")
 
 def login(request):
     return render(request, 'login.html')
@@ -21,17 +29,16 @@ def new_test(request):
     return render(request, 'new_test.html')
 
 def studentSignIn(request):
-    data = {}
     if request.method == "POST":
-        get_value= request.body
         data = json.loads(request.body);
-        #TODO add / update this user to the DB using the below
         userId = data["userId"];
         userName = data["userName"];
         email = data["userEmail"];
         user, created = User.objects.get_or_create(username=email, email=email);
         if created:
             user.set_password(userId);
+            user.first_name = userName.split()[0];
+            user.last_name = userName.split()[1];
             user.save();
         user = authenticate(username=email, password=userId)
         auth_login(request, user)
