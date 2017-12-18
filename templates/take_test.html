@@ -2,17 +2,26 @@
 {% block title %} Index {% endblock %}
 {%  block content %}
     <h1>
-     {{ request.user.first_name }} {{ request.user.last_name }}
+     Good luck {{ request.user.first_name }}!
         
 </h1>
 <hr/>
 {% if exam %}
 <h2>
-Taking: {{exam.name}}
-    <small>{{exam.points}} Points </small>
+    <small>You are taking</small>
+{{exam.name}}
+    <small>worth {{exam.points}} Points </small>
 </h2>
 
-Exam questions
+{% if questions %}
+
+{% for question in questions %}
+<hr/>
+<h3><small>({{question.points}})</small> {{question.text}}</h3>
+	{{question.answers.answer}}
+{% endfor %}
+{% endif%}
+
 {% endif %}
 
 {% endblock %}

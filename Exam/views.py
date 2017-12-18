@@ -87,10 +87,6 @@ def postNewExam(request):
             questionTitle = questions[question]["title"];
             questionPoints = questions[question]["points"];
             
-            #Create question object + save in DB
-            postQuestion = Question(text=questionTitle, number = questionNumber, points=questionPoints, examName = Exam.objects.get(name = examName));
-            postQuestion.save();
-            
             exam["questions"][currentQuestion]["title"] = questionTitle;
             exam["questions"][currentQuestion]["points"] = questionPoints;
             exam["questions"][currentQuestion]["answers"] = {};
@@ -107,6 +103,12 @@ def postNewExam(request):
                 
                 #Create answer object + post to DB
                 postAnswer = Answers(answer = answerText, correct = answerCorrect);
+                postAnswer.save();
+                       
+            #Create question object + save in DB
+                postQuestion = Question(text=questionTitle, number = questionNumber, points=questionPoints, examName = Exam.objects.get(name = examName), answers = postAnswer);
+                postQuestion.save();
+
                 answerNumber += 1;
     logger.error(exam);
     return HttpResponse(json.dumps(data), content_type="application/json")
@@ -174,5 +176,6 @@ def makequestion(request):
 @login_required(login_url="/login")
 def take_test(request, testName):
     exam = Exam.objects.get(name = testName);
-    return render(request, 'take_test.html', { 'exam' : exam })
+    questions = Question.objects.filter(examName = testName);
+    return render(request, 'take_test.html', { 'exam' : exam, 'questions':questions })
     
