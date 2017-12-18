@@ -1,35 +1,42 @@
 {% extends "base.html" %}
 {%  block content %}
 {% csrf_token %}
-<div class="row col-md-12">
-       <div class='loginBox'>
-       <h1>
+<div class="col-md-12 center">
+    
+       <div class='card'>
+  <div class="card-header">
            Exam Taking System
-       </h1>
-       <p>
+  </div>
+             <div class="card-block loginBox">
+
+       <small>
            Login / Logout using the forms below.
-       </p>
-           <p>
-               <b>Student Login:</b>
-           </p>
-       <div id="login" class="row col-md-12 center">
+       </small>
+           <br/>
+           <br/>
+                     <div class="col-12 align-self-center">
+                <div class="card-block">
+                  
+               <h4>Student Login:</h4>
+                    <br/>
+       <div id="login" class="col-md-12 center">
            <div class='g-signin2' data-onsuccess='onSignIn'></div>
        </div>
        
        <br/>
        <br/>
-       <div class="row col-md-12">
-       <p>
-           <b>Teacher Access:</b>
-       </p>
+    <h4>Teacher Access:</h4>
+
        <a href="/TeacherSignup">Teacher Signup</a>
            |
        <a href="/TeacherLogin">Teacher Login</a>
-       </div>
-
+    </div>
+           </div>
 
     </div>
 </div>
+    </div>
+
 <script type="text/javascript">
     $(document).ready(function() {
         if(Cookies.get("account") != null){ 
