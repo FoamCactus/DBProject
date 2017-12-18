@@ -1,15 +1,26 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 import json
-from django.contrib.auth import login,authenticate
+from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout as auth_logout
+from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from .forms import *
-
+from django.contrib.auth.models import User
+from django.shortcuts import HttpResponseRedirect
+import logging
+logger = logging.getLogger(__name__)
 
 # Create your views here.
+@login_required(login_url='/login')
 def index(request):
     return render(request, 'index.html')
+
+def logout(request):
+    auth_logout(request)
+    return HttpResponseRedirect("/login/")
 
 def login(request):
     return render(request, 'login.html')
@@ -19,9 +30,59 @@ def new_test(request):
 
 def studentSignIn(request):
     if request.method == "POST":
-        get_value= request.body
-    data = {}
+        data = json.loads(request.body);
+        userId = data["userId"];
+        userName = data["userName"];
+        email = data["userEmail"];
+        user, created = User.objects.get_or_create(username=email, email=email);
+        if created:
+            user.set_password(userId);
+            user.first_name = userName.split()[0];
+            user.last_name = userName.split()[1];
+            user.save();
+        user = authenticate(username=email, password=userId)
+        auth_login(request, user)
     return HttpResponse(json.dumps(data), content_type="application/json")
+
+def postNewExam(request):
+    data = {}
+    exam = {};
+    if request.method == "POST":
+        #The full, ready to put in DB exam object
+        get_value= request.body
+        data=json.loads(request.body);
+        examName = data["examName"];
+        totalPoints = data["totalPoints"];
+        exam["name"] = examName;
+        exam["points"] = totalPoints;
+        # get question list
+        questions = data["questions"];
+        exam["questions"] = {};
+        questionNumber = 1;
+        answerNumber = 1;
+        for question in questions:
+            currentQuestion = "question_" 
+            currentQuestion += str(questionNumber);
+            questionNumber += 1;
+            exam["questions"][currentQuestion] = {};
+            questionTitle = questions[question]["title"];
+            questionPoints = questions[question]["points"];
+            exam["questions"][currentQuestion]["title"] = questionTitle;
+            exam["questions"][currentQuestion]["points"] = questionPoints;
+            exam["questions"][currentQuestion]["answers"] = {};
+            answerList = questions[question]["answers"];
+            for answer in answerList:
+                currentAnswer = "answer_"
+                currentAnswer += str(answerNumber);
+                answerNumber += 1;
+                exam["questions"][currentQuestion]["answers"][currentAnswer] = {};
+                answerText = answerList[answer]["answerText"];
+                answerCorrect = answerList[answer]["correct"];
+                exam["questions"][currentQuestion]["answers"][currentAnswer]["answerText"] = answerText;
+                exam["questions"][currentQuestion]["answers"][currentAnswer]["correct"] = answerCorrect;
+    logger.error(exam);
+    return HttpResponse(json.dumps(data), content_type="application/json")
+
 
 def signup(request):
     if request.method == 'POST':
@@ -40,7 +101,6 @@ def signup(request):
 
 def success(request):
     return render(request, 'success.html')
-
 
 def makeexam(request):
     if request.method == "POST":

@@ -4,7 +4,7 @@
 <div class="row col-md-12">
        <div class='loginBox'>
        <h1>
-           Login
+           Exam Taking System
        </h1>
        <p>
            Login / Logout using the forms below.
@@ -15,7 +15,7 @@
        
        <br/>
        <br/>
-       <div class="bottom row col-md-6">
+       <div class="row col-md-12">
        <p>
            <b>Teacher Access:</b>
        </p>
@@ -29,7 +29,6 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function() {
-        console.log(Cookies.get("account"));
         if(Cookies.get("account") != null){ 
             $("#login").html("<button class='btn btn-primary' onclick='signOut()'>Sign Out</button>");
         } else {
@@ -37,22 +36,6 @@
     });
     
 function onSignIn(googleUser) {
-    function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie != '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = jQuery.trim(cookies[i]);
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-
   var profile = googleUser.getBasicProfile();
   var user = {
 	userId : profile.getId(),
@@ -61,7 +44,7 @@ function onSignIn(googleUser) {
 	};
  	$.ajaxSetup({
     beforeSend: function(xhr, settings) {
-            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+            xhr.setRequestHeader("X-CSRFToken", Cookies.get('csrftoken'));
         }
 	});
     $.ajax({
@@ -73,7 +56,7 @@ function onSignIn(googleUser) {
        success: function(data) {
            		if(Cookies.get("account") == null) {
                   Cookies.set('account', profile.getId());
-				  location.reload();
+				  window.location="/";
                 }
     		},
         error: function(error) {
@@ -86,7 +69,7 @@ function onSignIn(googleUser) {
     Cookies.remove('account');
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
-      location.reload();
+      	window.location="/logout";
     });
   }
 </script>
