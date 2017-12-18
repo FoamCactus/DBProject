@@ -179,15 +179,18 @@ def take_test(request, testName):
     questions = Question.objects.filter(examName = testName);
     questionGroup = {};
     answer = 0;
+    # I'm stopping at J because that's too many
+    alphabet = ["A","B","C","D","E","F","G","H","I","J"];
     for question in questions:
         answer += 1;
         try:
-            questionGroup[question.text]["answerGroup"][answer]=question.answers;
+            questionGroup[question.text]["answerGroup"][alphabet[answer]]=question.answers;
             questionGroup[question.text]["question"]= question;
         except:
+            answer = 0;
             questionGroup[question.text] = {};
             questionGroup[question.text]["question"]= question;
             questionGroup[question.text]["answerGroup"] = {};
-            questionGroup[question.text]["answerGroup"][answer] = question.answers;
+            questionGroup[question.text]["answerGroup"][alphabet[answer]] = question.answers;
     return render(request, 'take_test.html', { 'exam' : exam, 'questions':questionGroup })
     

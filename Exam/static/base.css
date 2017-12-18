@@ -50,6 +50,13 @@ background-color: #ffffff;
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
+.answerText:disabled {
+    cursor: initial;
+    background-color: #F7F7F9;
+}
+.answerText:disabled::-webkit-input-placeholder {
+    color: black;
+}
 button:hover {
     cursor: pointer;
 }

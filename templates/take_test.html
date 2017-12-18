@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block title %} Index {% endblock %}
 {%  block content %}
+
     <h1>
      Good luck {{ request.user.first_name }}!    
 </h1>
@@ -15,23 +16,31 @@
 <form>
 {% if questions %}
 {% for key, value in questions.items %}
-        <div class="card" style="background-color:#DFDFDF;color:black">
+        <div class="card" style="background-color:#e8e8e8;color:black">
   <div class="card-block">
 <h2>{{key}} <small>({{value.question.points}})</small></h2>
 <hr/>
+      <div class="row col-md-12">
+
 {% for answerNumber in value.answerGroup.items %}
 {% for answer in answerNumber%}
     {%if answer.answer %}
-<div class="form-check">
-  <label class="form-check-label">
-    <input class="form-check-input" type="radio" name="{{key}}" id="exampleRadios1" value="{{answerNumber}}">
-    {{answer.answer}}
-  </label>
+        <div class="input-group col-md-6">
+      <span class="input-group-addon">
+        {{answerNumber.0}}
+      </span>
+     <span class="input-group-addon">
+    <input type="radio" name="{{key}}" value="{{answerNumber}}">
+                </span>
+      <input type="text" class="form-control answerText" disabled placeholder="{{answer.answer}}">
+    </div>
+     {% endif %}
+{% endfor %}
+
+{% endfor %}
 </div>
-    {% endif %}
-{% endfor %}
-{% endfor %}
-              </div></div>
+</div>
+    </div>
     <br/>
 {% endfor %}
 {% endif%}
