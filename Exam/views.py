@@ -130,6 +130,10 @@ def success(request):
     return render(request, 'success.html')
 
 
+def profile(request):
+    return render(request, 'profile.html')
+
+
 def makeexam(request):
     if request.method == "POST":
         form = ExamForm(request.POST)

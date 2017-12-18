@@ -15,4 +15,5 @@ urlpatterns = [
     url(r'^makeExam/$', views.makeexam, name='makeExam'),
     url(r'^makequestion/$', views.makequestion, name='newquestion'),
     url(r'^postNewExam/$', views.postNewExam, name='postNewExam'),
+    url(r'^accounts/profile/$', views.profile, name='profile'),
 ]

@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block title %} profile page {% endblock %}
+{% block content %}
+{% if request.user.is_authenticated %} Welcome '{{ request.user.username }}' {% endif %}
+    <a href="{% url 'new_test' %}">makeExam</a>
+{% endblock %}
