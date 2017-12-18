@@ -16,8 +16,9 @@ logger = logging.getLogger(__name__)
 # Create your views here.
 @login_required(login_url='/login')
 def index(request):
-    return render(request, 'index.html')
-
+    exams = Exam.objects.all();
+    return render(request, 'index.html', { 'exams' : exams })
+   
 def logout(request):
     auth_logout(request)
     return HttpResponseRedirect("/login/")
@@ -58,28 +59,41 @@ def postNewExam(request):
         # get question list
         questions = data["questions"];
         exam["questions"] = {};
+        
+        # Create exam object + save in DB
+        postExam = Exam(name = examName, points = totalPoints);
+        postExam.save();
+        
         questionNumber = 1;
         answerNumber = 1;
         for question in questions:
             currentQuestion = "question_" 
             currentQuestion += str(questionNumber);
-            questionNumber += 1;
             exam["questions"][currentQuestion] = {};
             questionTitle = questions[question]["title"];
             questionPoints = questions[question]["points"];
+            
+            #Create question object + save in DB
+            postQuestion = Question(text=questionTitle, number = questionNumber, points=questionPoints, examName = Exam.objects.get(name = examName));
+            postQuestion.save();
+            
             exam["questions"][currentQuestion]["title"] = questionTitle;
             exam["questions"][currentQuestion]["points"] = questionPoints;
             exam["questions"][currentQuestion]["answers"] = {};
             answerList = questions[question]["answers"];
+            questionNumber += 1;
             for answer in answerList:
                 currentAnswer = "answer_"
                 currentAnswer += str(answerNumber);
-                answerNumber += 1;
                 exam["questions"][currentQuestion]["answers"][currentAnswer] = {};
                 answerText = answerList[answer]["answerText"];
                 answerCorrect = answerList[answer]["correct"];
                 exam["questions"][currentQuestion]["answers"][currentAnswer]["answerText"] = answerText;
                 exam["questions"][currentQuestion]["answers"][currentAnswer]["correct"] = answerCorrect;
+                
+                #Create answer object + post to DB
+                postAnswer = Answers(answer = answerText, correct = answerCorrect);
+                answerNumber += 1;
     logger.error(exam);
     return HttpResponse(json.dumps(data), content_type="application/json")
 

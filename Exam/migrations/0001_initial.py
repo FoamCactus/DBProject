@@ -3,7 +3,7 @@
 import datetime
 from django.db import migrations, models
 import django.db.models.deletion
-
+import pytz
 
 class Migration(migrations.Migration):
 
@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('name', models.CharField(max_length=30, primary_key=True, serialize=False)),
                 ('points', models.IntegerField()),
-                ('time_of_creation', models.DateTimeField(default=datetime.datetime(2017, 12, 16, 17, 15, 36, 926098))),
+                ('time_of_creation', models.DateTimeField(default=datetime.datetime.now(pytz.timezone('US/Eastern')))),
             ],
         ),
         migrations.CreateModel(
