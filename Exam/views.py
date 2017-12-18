@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 import json
-from django.contrib.auth import login,authenticate
+from django.contrib.auth import login as auth_login
+from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from .forms import *
+from django.contrib.auth.models import User
 import logging
 logger = logging.getLogger(__name__)
 
@@ -27,9 +29,12 @@ def studentSignIn(request):
         userId = data["userId"];
         userName = data["userName"];
         email = data["userEmail"];
-        logger.error(userId + " " + userName + " " + email);
+        user, created = User.objects.get_or_create(username=email, email=email);
+        if created:
+            user.set_password(userId);
+            user.save();
         user = authenticate(username=email, password=userId)
-        login(request)
+        auth_login(request, user)
     return HttpResponse(json.dumps(data), content_type="application/json")
 
 def postNewExam(request):
