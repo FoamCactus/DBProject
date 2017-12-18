@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import *
 from django.contrib.auth.models import User
 from django.shortcuts import HttpResponseRedirect
+from django.contrib.auth.models import Group
 import logging
 logger = logging.getLogger(__name__)
 
@@ -41,6 +42,9 @@ def studentSignIn(request):
             user.first_name = userName.split()[0];
             user.last_name = userName.split()[1];
             user.save();
+            # Add user to Studen Group
+            studentGroup = Group.objects.get(name="Students");
+            studentGroup.user_set.add(user);
         user = authenticate(username=email, password=userId)
         auth_login(request, user)
     return HttpResponse(json.dumps(data), content_type="application/json")

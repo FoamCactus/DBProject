@@ -26,11 +26,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('name', models.CharField(max_length=30, primary_key=True, serialize=False)),
                 ('points', models.IntegerField()),
-<<<<<<< HEAD
                 ('time_of_creation', models.DateTimeField(default=datetime.datetime.now(pytz.timezone('US/Eastern')))),
-=======
-                ('time_of_creation', models.DateTimeField(default=datetime.datetime(2017, 12, 18, 3, 34, 45, 998501))),
->>>>>>> 0a6ae7fc36d8d499691b678dd57e654f989fb5af
             ],
         ),
         migrations.CreateModel(
