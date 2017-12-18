@@ -177,5 +177,17 @@ def makequestion(request):
 def take_test(request, testName):
     exam = Exam.objects.get(name = testName);
     questions = Question.objects.filter(examName = testName);
-    return render(request, 'take_test.html', { 'exam' : exam, 'questions':questions })
+    questionGroup = {};
+    answer = 0;
+    for question in questions:
+        answer += 1;
+        try:
+            questionGroup[question.text]["answerGroup"][answer]=question.answers;
+            questionGroup[question.text]["question"]= question;
+        except:
+            questionGroup[question.text] = {};
+            questionGroup[question.text]["question"]= question;
+            questionGroup[question.text]["answerGroup"] = {};
+            questionGroup[question.text]["answerGroup"][answer] = question.answers;
+    return render(request, 'take_test.html', { 'exam' : exam, 'questions':questionGroup })
     
