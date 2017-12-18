@@ -16,4 +16,5 @@ urlpatterns = [
     url(r'^makequestion/$', views.makequestion, name='newquestion'),
     url(r'^postNewExam/$', views.postNewExam, name='postNewExam'),
     url(r'^accounts/profile/$', views.profile, name='profile'),
+    url(r'^take_test/(?P<testName>.+?)/$', views.take_test, name='take_test'),
 ]

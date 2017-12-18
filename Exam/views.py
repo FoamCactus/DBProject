@@ -170,3 +170,9 @@ def makequestion(request):
     else:
         form = QuestionForm()
         return render(request, 'makequestions.html', {'form': form})
+    
+@login_required(login_url="/login")
+def take_test(request, testName):
+    exam = Exam.objects.get(name = testName);
+    return render(request, 'take_test.html', { 'exam' : exam })
+    
