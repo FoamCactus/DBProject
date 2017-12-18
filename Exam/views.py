@@ -23,6 +23,7 @@ def index(request):
     return render(request, 'index.html', { 'exams' : exams })
 
 
+@login_required(login_url='/login')
 def logout(request):
     auth_logout(request)
     return HttpResponseRedirect("/login/")
@@ -32,6 +33,7 @@ def login(request):
     return render(request, 'login.html')
 
 
+@login_required(login_url='/login')
 def new_test(request):
     return render(request, 'new_test.html')
 
@@ -55,6 +57,8 @@ def studentSignIn(request):
         auth_login(request, user)
     return HttpResponse(json.dumps(data), content_type="application/json")
 
+
+@login_required(login_url='/login')
 def postNewExam(request):
     data = {}
     exam = {};
@@ -126,14 +130,17 @@ def signup(request):
     return render(request, 'signup.html', {'form': form})
 
 
+@login_required(login_url='/login')
 def success(request):
     return render(request, 'success.html')
 
 
+@login_required(login_url='/login')
 def profile(request):
     return render(request, 'profile.html')
 
 
+@login_required(login_url='/login')
 def makeexam(request):
     if request.method == "POST":
         form = ExamForm(request.POST)
@@ -148,6 +155,7 @@ def makeexam(request):
         return render(request,'makeExam.html', {'form':  form})
 
 
+@login_required(login_url='/login')
 def makequestion(request):
     if request.method == 'POST':
         form = QuestionForm()
