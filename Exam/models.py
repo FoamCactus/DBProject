@@ -2,6 +2,7 @@ from django.db import models
 import datetime
 # Create your models here.
 
+
 class Exam(models.Model):
     name = models.CharField(max_length=30, primary_key=True)
     points = models.IntegerField()
@@ -21,11 +22,11 @@ class Question(models.Model):
     answers = models.ForeignKey(Answers, on_delete=models.CASCADE, default=-1)
 
 
-
 class Student(models.Model):
     identifier = models.TextField(max_length=60)
 
+
 class Results(models.Model):
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
-    points =models.FloatField(default=0)
+    points = models.FloatField(default=0)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
