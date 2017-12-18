@@ -17,4 +17,6 @@ urlpatterns = [
     url(r'^postNewExam/$', views.postNewExam, name='postNewExam'),
     url(r'^accounts/profile/$', views.profile, name='profile'),
     url(r'^take_test/(?P<testName>.+?)/$', views.take_test, name='take_test'),
+    url(r'^grade_test/(?P<testName>.+?)/$', views.grade_test, name='grade_test'),
+
 ]

@@ -22,7 +22,7 @@
       <th>Exam Name</th>
       <th>Points</th>
       <th>Date Created</th>
-      <th>Take it</th>
+      <th>Available</th>
     </tr>
   </thead>
   <tbody>
@@ -30,7 +30,7 @@
         <tr>
       <td>{{exam.name}}</td>
       <td>{{exam.points}}</td>
-      <td>{{exam.time_of_creation}}</td>
+      <td class="date">{{exam.time_of_creation.timestamp}}</td>
             <td><a href="/take_test/{{exam.name}}" class="btn btn-secondary">
                 Take Exam
                 </a></td>
@@ -40,7 +40,17 @@
   </tbody>
 </table>
     </div>
-
+<script type="text/javascript">
+	$(document).ready(function(){
+        var date = $(".date").text();
+        console.log(date);
+        $(".date").html(moment.unix(date).format("MMMM DD, h:mm A"));
+    });
+</script>
+{% else %}
+<p class="card card-block col-md-12 center">
+    There are currently no exams to take!
+</p>
 {% endif %}
 
 {% endblock %}

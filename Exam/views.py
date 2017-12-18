@@ -30,6 +30,9 @@ def logout(request):
 
 
 def login(request):
+    #Ensure groups at least exist
+    p, created = Group.objects.get_or_create(name = 'Teachers');
+    p, created = Group.objects.get_or_create(name = 'Students');
     return render(request, 'login.html')
 
 
@@ -39,17 +42,20 @@ def new_test(request):
 
 
 def studentSignIn(request):
-    if request.method == "POST":
+    if request.method == "POST":      
         data = json.loads(request.body);
         userId = data["userId"];
         userName = data["userName"];
         email = data["userEmail"];
+        student, created = Student.objects.get_or_create(identifier=email);
+        if created:
+            student.save();
         user, created = User.objects.get_or_create(username=email, email=email);
         if created:
             user.set_password(userId);
             user.first_name = userName.split()[0];
             user.last_name = userName.split()[1];
-            user.save();
+            user.save();                
             # Add user to Studen Group
             studentGroup = Group.objects.get(name="Students");
             studentGroup.user_set.add(user);
@@ -62,10 +68,8 @@ def studentSignIn(request):
 def postNewExam(request):
     data = {}
     exam = {};
-    logger.error(request.body);
     if request.method == "POST":
         data=json.loads(request.body);
-        logger.error(data);
         examName = data["examName"];
         totalPoints = data["totalPoints"];
         exam["name"] = examName;
@@ -190,4 +194,11 @@ def take_test(request, testName):
             questionGroup[question.text]["answerGroup"] = {};
             questionGroup[question.text]["answerGroup"][alphabet[answer]] = question.answers;
     return render(request, 'take_test.html', { 'exam' : exam, 'questions':questionGroup })
+   
+@login_required(login_url="/login")
+def grade_test(request, testName):
+    student = Student.objects.get(identifier=request.user.email);
+    exam = Exam.objects.get(name=testName);
+    result = Result(exam = exam, points=10, student=student);
+    return HttpResponse(json.dumps({}), content_type="application/json")
     

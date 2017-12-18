@@ -1,12 +1,11 @@
 from django.db import models
 import datetime
-# Create your models here.
-
+from datetime import datetime
 
 class Exam(models.Model):
     name = models.CharField(max_length=30, primary_key=True)
     points = models.IntegerField()
-    time_of_creation = models.DateTimeField(default=datetime.datetime.now())
+    time_of_creation =models.DateTimeField(default=datetime.now().isoformat())
 
 
 class Answers(models.Model):
