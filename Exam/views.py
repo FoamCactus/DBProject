@@ -232,6 +232,8 @@ def take_test(request, testName):
 @login_required(login_url="/login")
 def grade_test(request, testName):
     results = {};
+    correctList = [];
+    incorrect = [];
     if request.method == 'POST':
         alphabet = ["A","B","C","D","E","F","G","H","I","J"];
         pointsScored = 0;
@@ -256,9 +258,18 @@ def grade_test(request, testName):
             selectedAnswer = selectedQuestion[2:3];
             correct = questionGroup[q]["answerGroup"][selectedAnswer].correct;
             if(correct):
+                correctList.append(q);
                 pointsScored += questionPoints;
+            else:
+                incorrect.append(q);
         results["points"] = pointsScored;
         results["total"] = exam.points;
+        results["correctList"] = correctList;
+        if not (results["correctList"]):
+            results["correctList"] = "None";
+        results["incorrect"] = incorrect;
+        if not (results["incorrect"]):
+            results["incorrect"] = "None";
         student = Student.objects.get(identifier=request.user.email);
         result = Results(exam = exam, points=pointsScored, student=student);
         result.save();
