@@ -4,25 +4,30 @@
 <div class="row col-md-12">
     
     <h1>
-        Hello, {{ request.user.first_name }} {{ request.user.last_name }}
+        Hello,     
+    {% if teacher %}
+    {{request.user}}
+        {% else %}
+        {{ request.user.first_name }} {{ request.user.last_name }}
+    {% endif %}
         
 </h1>
 <hr/>
-{% if exams %}
-
-    <div class="row col-md-12">   
+        <div class="row col-md-12">   
 <h2>
-    Choose an exam to take
+    View all exams below
 </h2>
     </div>
+{% if exams %}
+
 
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>Exam Name</th>
+      <th>Name</th>
       <th>Points</th>
       <th>Date Created</th>
-      <th>Results</th>
+      <th>Exam</th>
     </tr>
   </thead>
   <tbody>
@@ -32,12 +37,21 @@
       <td>{{v.exam.points}}</td>
       <td class="date">{{v.exam.time_of_creation.timestamp}}</td>
             <td>
+                {% if teacher %}
+                 <button onclick="deleteExam('{{k}}')" class="btn btn-primary">
+                X
+                </button>  
+                <a href="/view_results/{{k}}" class="btn btn-secondary">
+                View Results
+                </a> 
+                {% else %}
                 {%if v.taken %}
                 <b>{{v.taken.points}} / {{v.exam.points}}</b>
                 {% else %}
                 <a href="/take_test/{{k}}" class="btn btn-secondary">
                 Take Exam
                 </a>   	
+            	{% endif %}
             	{% endif %}
             </td>
     </tr>
@@ -47,9 +61,48 @@
 </table>
     </div>
 <script type="text/javascript">
+    
+    function deleteExam(examName) {
+    	$.confirm({
+           title: "Delete Exam?",
+           content: "Are you sure you want to delete " + examName + "?",
+           type: "red",
+           buttons: {
+
+                  no: {
+                  	text: "No, cancel",
+                  	btnClass: "btn btn-primary",
+                                  },
+                           	yes: {
+            		text: "Yes, delete",
+            		btnClass: "btn btn-secondary",
+            		action: function(){
+          $.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+            xhr.setRequestHeader("X-CSRFToken", Cookies.get('csrftoken'));
+        }
+	});  
+       $.ajax({
+       type: "POST",
+       contentType: "application/json; charset=utf-8",
+       dataType: "json",
+       url: "/delete_test/",
+       data: JSON.stringify({examName: examName }),
+       success: function(data) {
+				location.reload();       
+    		},
+        error: function(error) {
+        	console.log(error);
+        }
+    });
+        }
+        },
+        	}
+        });    
+    }
+    
 	$(document).ready(function(){
         var date = $(".date").text().split(".")[0];
-        console.log(date);
         $(".date").html(moment.unix(date).format("MMMM DD, h:mm A"));
     });
 </script>

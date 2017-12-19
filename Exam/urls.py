@@ -18,5 +18,7 @@ urlpatterns = [
     url(r'^accounts/profile/$', views.profile, name='profile'),
     url(r'^take_test/(?P<testName>.+?)/$', views.take_test, name='take_test'),
     url(r'^grade_test/(?P<testName>.+?)/$', views.grade_test, name='grade_test'),
+    url(r'^delete_test/$', views.delete_test, name='delete_test'),
+    url(r'^view_results/(?P<testName>.+?)/$', views.view_results, name='view_results'),
 
 ]

@@ -18,19 +18,33 @@ logger = logging.getLogger(__name__)
 
 
 @login_required(login_url='/login')
+def view_results(request,testName):
+    examResults = {};
+    teacher = User.objects.filter(email=request.user.email, groups__name='Teachers').exists();
+    exam = Exam.objects.get(name = testName);
+    results = Results.objects.filter(exam = exam);
+    examResults["results"] = results;
+    examResults["exam"] = exam;
+    return render(request, 'view_results.html', { 'examResults' : examResults, 'teacher':teacher })
+
+@login_required(login_url='/login')
 def index(request):
+    teacher = User.objects.filter(email=request.user.email, groups__name='Teachers').exists();
     examList = {};
     exams = Exam.objects.all();
-    student = Student.objects.get(identifier=request.user.email);
+    if not teacher:
+        student = Student.objects.get(identifier=request.user.email);
     for exam in exams:
         examList[exam.name]= {};
         examList[exam.name]["exam"] = exam;
         try:
-            result = Results.objects.get(exam = exam, student = student);
-            examList[exam.name]["taken"] = result;
+            if not teacher:
+                result = Results.objects.get(exam = exam, student = student);
+                examList[exam.name]["taken"] = result;
         except:
             logger.error("Not Taken");
-    return render(request, 'index.html', { 'exams' : examList })
+ 
+    return render(request, 'index.html', { 'exams' : examList, 'teacher':teacher })
 
 
 @login_required(login_url='/login')
@@ -124,6 +138,16 @@ def postNewExam(request):
                 answerNumber += 1;
     return HttpResponse(json.dumps(data), content_type="application/json")
 
+def delete_test(request):
+    data = {}
+    if request.method == "POST":
+        data=json.loads(request.body);
+        examName = data["examName"];
+        if examName is not None:
+            exam = Exam.objects.get(name = examName);
+            if exam is not None:
+                exam.delete();
+    return HttpResponse(json.dumps(data), content_type="application/json")
 
 def signup(request):
     if request.method == 'POST':
@@ -239,4 +263,8 @@ def grade_test(request, testName):
         result = Results(exam = exam, points=pointsScored, student=student);
         result.save();
     return HttpResponse(json.dumps(results), content_type="application/json")
+
+    
+
+
     
