@@ -22,18 +22,24 @@
       <th>Exam Name</th>
       <th>Points</th>
       <th>Date Created</th>
-      <th>Available</th>
+      <th>Results</th>
     </tr>
   </thead>
   <tbody>
-      {% for exam in exams %}
+      {% for k,v in exams.items %}
         <tr>
-      <td>{{exam.name}}</td>
-      <td>{{exam.points}}</td>
-      <td class="date">{{exam.time_of_creation.timestamp}}</td>
-            <td><a href="/take_test/{{exam.name}}" class="btn btn-secondary">
+      <td>{{k}}</td>
+      <td>{{v.exam.points}}</td>
+      <td class="date">{{v.exam.time_of_creation.timestamp}}</td>
+            <td>
+                {%if v.taken %}
+                <b>{{v.taken.points}} / {{v.exam.points}}</b>
+                {% else %}
+                <a href="/take_test/{{k}}" class="btn btn-secondary">
                 Take Exam
-                </a></td>
+                </a>   	
+            	{% endif %}
+            </td>
     </tr>
 {% endfor %}
   

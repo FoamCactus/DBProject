@@ -19,8 +19,17 @@ logger = logging.getLogger(__name__)
 
 @login_required(login_url='/login')
 def index(request):
+    examList = {};
     exams = Exam.objects.all();
-    return render(request, 'index.html', { 'exams' : exams })
+    student = Student.objects.get(identifier=request.user.email);
+    for exam in exams:
+        examList[exam.name]= {};
+        examList[exam.name]["exam"] = exam;
+        try:
+            result = Results.objects.get(exam = exam, student = student);
+            examList[exam.name]["taken"] = result;
+        except:
+    return render(request, 'index.html', { 'exams' : examList })
 
 
 @login_required(login_url='/login')
@@ -197,8 +206,36 @@ def take_test(request, testName):
    
 @login_required(login_url="/login")
 def grade_test(request, testName):
-    student = Student.objects.get(identifier=request.user.email);
-    exam = Exam.objects.get(name=testName);
-    result = Result(exam = exam, points=10, student=student);
-    return HttpResponse(json.dumps({}), content_type="application/json")
+    results = {};
+    if request.method == 'POST':
+        alphabet = ["A","B","C","D","E","F","G","H","I","J"];
+        pointsScored = 0;
+        exam = Exam.objects.get(name=testName);
+        questions = Question.objects.filter(examName = exam);
+        questionGroup = {};
+        answer = 0;
+        for question in questions:
+            answer += 1;
+            try:
+                questionGroup[question.text]["answerGroup"][alphabet[answer]]=question.answers;
+                questionGroup[question.text]["question"]= question;
+            except:
+                answer = 0;
+                questionGroup[question.text] = {};
+                questionGroup[question.text]["question"]= question;
+                questionGroup[question.text]["answerGroup"] = {};
+                questionGroup[question.text]["answerGroup"][alphabet[answer]] = question.answers;
+        for q in questionGroup:
+            selectedQuestion = request.POST[q];
+            questionPoints = questionGroup[q]["question"].points;
+            selectedAnswer = selectedQuestion[2:3];
+            correct = questionGroup[q]["answerGroup"][selectedAnswer].correct;
+            if(correct):
+                pointsScored += questionPoints;
+        results["points"] = pointsScored;
+        results["total"] = exam.points;
+        student = Student.objects.get(identifier=request.user.email);
+        result = Results(exam = exam, points=pointsScored, student=student);
+        result.save();
+    return HttpResponse(json.dumps(results), content_type="application/json")
     
