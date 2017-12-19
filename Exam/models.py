@@ -5,7 +5,7 @@ from datetime import datetime
 class Exam(models.Model):
     name = models.CharField(max_length=30, primary_key=True)
     points = models.IntegerField()
-    time_of_creation =models.DateTimeField(default=datetime.now().isoformat())
+    time_of_creation = models.DateTimeField(auto_now_add=True)
 
 
 class Answers(models.Model):
