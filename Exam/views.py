@@ -29,6 +29,7 @@ def index(request):
             result = Results.objects.get(exam = exam, student = student);
             examList[exam.name]["taken"] = result;
         except:
+            logger.error("Not Taken");
     return render(request, 'index.html', { 'exams' : examList })
 
 
